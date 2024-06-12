@@ -14,7 +14,15 @@
       </v-card-item>
       <v-card-text>
        <div class="mb-10">{{ movie.description }}</div>
-       <div>Rating ({{ movie.rating }}/5): </div>
+       <div class="d-flex">
+        Rating ({{ movie.rating }}/5): 
+        <StarIcon
+          v-for="rate in movie.rating"
+          :key="`star-${rate}`"
+          class="movie-item-star-icon"
+        >
+        </StarIcon>
+      </div>
       </v-card-text>
     </v-card>
   </template>

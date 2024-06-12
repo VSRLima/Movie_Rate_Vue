@@ -6,3 +6,7 @@
 .centralized-margin {
     margin: auto
 }
+
+.movie-item-star-icon {
+    @apply h-5 w-5 text-yellow-500;
+}
