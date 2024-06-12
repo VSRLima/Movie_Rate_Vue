@@ -10,3 +10,7 @@
 .movie-item-star-icon {
     @apply h-5 w-5 text-yellow-500;
 }
+
+.movie-item-star-icon-unrated {
+    @apply h-5 w-5 text-gray-400;
+}
