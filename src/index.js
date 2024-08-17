@@ -20,11 +20,24 @@ export default {
           } 
           movie.rating = rate;
           
+        },
+        deleteCard(movieId) {
+            const movieList = this.movies.filter(el =>  el.id != movieId);
+            this.movies = movieList;
+        },
+        addCard(newMovie) {
+
         }
     },
     data() {
         return {
             allStars: 5,
+            valid: false,
+            movieName: "",
+            movieDescription: "",
+            movieImg: "",
+            movieGenre: "",
+            movieGenreOptions: ["Action", "Drama", "Terror", "Sci-Fi"]
         }
     }
 }
