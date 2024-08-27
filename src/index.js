@@ -25,19 +25,64 @@ export default {
             const movieList = this.movies.filter(el =>  el.id != movieId);
             this.movies = movieList;
         },
-        addCard(newMovie) {
+        hasErrors() {
+            this.formErrors = [];
+            const urlRegex = /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/ig
+            if (!this.movieName) {
+                this.formErrors.push("Missing movie name");
+            }
+            
+            if (!this.movieDescription) {
+                this.formErrors.push("Missing movie description");
+            }
 
-        }
+            if (!this.movieImg || !urlRegex.test(this.movieImg)) {
+                this.formErrors.push("Missing movie Image");
+            }
+
+            if (!this.movieGenre) {
+                this.formErrors.push("Missing movie genre");
+            }
+
+            if (!this.formErrors.length) {
+                return false;
+            }
+            return true;
+        },
+        closeDialog() {
+            this.isActive.value = false;
+        },
+        addCard() {
+            if (this.hasErrors()) 
+                return false;
+                
+
+            const newMovie = {
+                id: movies.items.length + 1,
+                name: this.movieName,
+                description: this.movieDescription,
+                image: this.movieImg,
+                rating: 0,
+                genres: this.movieGenre,
+                inTheaters: this.movieTheaters || false,
+            }
+
+            movies.items.push(newMovie);
+            console.log(movies.items);
+            this.closeDialog();
+        },
     },
     data() {
         return {
             allStars: 5,
-            valid: false,
             movieName: "",
             movieDescription: "",
             movieImg: "",
             movieGenre: "",
-            movieGenreOptions: ["Action", "Drama", "Terror", "Sci-Fi"]
+            movieGenreOptions: ["Action", "Drama", "Terror", "Sci-Fi"],
+            movieTheaters: false,
+            formErrors: [],
+            isActive: {value: false}
         }
     }
 }

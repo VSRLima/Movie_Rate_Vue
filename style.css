@@ -18,3 +18,8 @@
 .movie-item-big-star-icon {
     @apply h-8 w-8 text-yellow-500
 }
+
+.form-grid {
+    display: grid;
+    gap: 16px;
+}
