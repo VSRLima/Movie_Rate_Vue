@@ -1,11 +1,9 @@
 <template>
-  <v-dialog max-width="500">
-    <template v-slot:activator="{ props: activatorProps }">
-      <v-btn v-bind="activatorProps" color="surface-variant" text="Open Dialog" variant="flat"></v-btn>
-    </template>
-
+    <v-btn color="surface-variant" text="Open Dialog" variant="flat" @click="openDialog"></v-btn>
+  
+  <v-dialog max-width="500" v-model="isDialogOpen">
     <template v-slot:default="{ isActive }">
-      <v-card title="Add a new movie" color="#111827">
+      <v-card title="Add a new movie" color="#111827" >
         <v-card-item>
           <v-form @submit.prevent="addCard" novalidate="true">
             <v-container class="form-grid">
@@ -44,7 +42,7 @@
       </v-card>
     </template>
   </v-dialog>
-  <template v-for="movie in movies">
+  <template v-for="movie in movies" :key="movie.id">
     <v-card class="centralized-margin" max-width="400">
       <v-img cover max-height="600" :src="movie.image">
         <StarIcon :class="movie.rating ? 'movie-item-big-star-icon' : 'movie-item-star-icon-unrated'"></StarIcon>
@@ -65,9 +63,6 @@
               </StarIcon>
             </button>
           </template>
-        </div>
-        <div>
-          <button @click=""></button>
         </div>
       </v-card-text>
     </v-card>

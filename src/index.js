@@ -1,4 +1,4 @@
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import movies from "./movies.json"
 import { StarIcon } from "@heroicons/vue/24/solid";
 
@@ -13,6 +13,9 @@ export default {
         }
     },
     methods: {
+        openDialog() {
+            this.isDialogOpen = !this.isDialogOpen;
+        },
         clickHandler(rate, movie) {
           if (rate === movie.rating) {
             alert("Button previously clicked!")
@@ -26,7 +29,7 @@ export default {
             this.movies = movieList;
         },
         hasErrors() {
-            this.formErrors = [];
+            this.formErrors = reactive([]);
             const urlRegex = /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/ig
             if (!this.movieName) {
                 this.formErrors.push("Missing movie name");
@@ -49,8 +52,12 @@ export default {
             }
             return true;
         },
-        closeDialog() {
-            this.isActive.value = false;
+        clearForm() {
+            this.movieName = null
+            this.movieDescription = null
+            this.movieImg = null
+            this.movieGenre = null
+            this.movieTheaters = false;
         },
         addCard() {
             if (this.hasErrors()) 
@@ -63,26 +70,28 @@ export default {
                 description: this.movieDescription,
                 image: this.movieImg,
                 rating: 0,
-                genres: this.movieGenre,
+                genres: [this.movieGenre],
                 inTheaters: this.movieTheaters || false,
             }
 
             movies.items.push(newMovie);
-            console.log(movies.items);
-            this.closeDialog();
+            this.clearForm();
+            this.openDialog();
+
         },
     },
     data() {
         return {
             allStars: 5,
-            movieName: "",
-            movieDescription: "",
-            movieImg: "",
-            movieGenre: "",
+            movieName: ref(null),
+            movieDescription: ref(null),
+            movieImg: ref(null),
+            movieGenre: ref(null),
             movieGenreOptions: ["Action", "Drama", "Terror", "Sci-Fi"],
-            movieTheaters: false,
-            formErrors: [],
-            isActive: {value: false}
+            movieTheaters: ref(null),
+            isDialogOpen: ref(false),
+            formErrors: ref([]),
+            showForm: false,
         }
     }
 }
